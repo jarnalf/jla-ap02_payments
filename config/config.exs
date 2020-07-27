@@ -31,4 +31,4 @@ use Mix.Config
 config :gringotts, Gringotts.Gateways.Stripe,
   adapter: Gringotts.Gateways.Stripe,
   secret_key: "",
-  default_currency: "USD"
+  default_currency: "EUR"
