@@ -17,6 +17,7 @@ defmodule SnitchPayments.PaymentMethodCode do
   @hosted_payment "hpm"
   @cash_on_delivery "cod"
   @store_credit "stc"
+  @transferencia "tra"
 
   def credit_card do
     @credit_card
@@ -26,15 +27,19 @@ defmodule SnitchPayments.PaymentMethodCode do
     @hosted_payment
   end
 
-  def store_credit do
-    @store_credit
-  end
-
   def cash_on_delivery do
     @cash_on_delivery
   end
 
+  def store_credit do
+    @store_credit
+  end
+
+  def transferencia do
+    @transferencia
+  end
+
   def payment_types do
-    [@credit_card, @hosted_payment, @cash_on_delivery, @store_credit]
+    [@credit_card, @hosted_payment, @cash_on_delivery, @store_credit, @transferencia]
   end
 end

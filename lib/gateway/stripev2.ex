@@ -1,24 +1,28 @@
-defmodule SnitchPayments.Gateway.PayuBiz do
+defmodule SnitchPayments.Gateway.Stripev2 do
   @moduledoc """
   Module to expose utilities and functions for the payemnt
-  gateway `payubiz`.
+  gateway `stripev2`.
   """
 
   alias SnitchPayments.PaymentMethodCode
   alias SnitchPayments.Response.HostedPayment
 
   @behaviour SnitchPayments.Gateway
+  @credentials [:secret_key, :publishable_key]
 
-  @credentials [:merchant_key, :salt]
-  @test_url "https://test.payu.in/_payment"
-  @live_url "https://secure.payu.in/_payment"
+  @failure_status "failure"
+  @success_status "success"
 
   @doc """
   Returns the preferences for the gateway, at present it is mainly the
   list of credentials.
 
-  These `credentials` refer to one provided by a `payubiz` to a seller on
+  These `credentials` refer to one provided by a `stripe` to a seller on
   account creation.
+
+  The credentials consist of
+  - `secret key`
+  - `publishable key`
   """
   @spec preferences() :: list
   def preferences do
@@ -29,7 +33,7 @@ defmodule SnitchPayments.Gateway.PayuBiz do
   Returns the `payment code` for the gateway.
 
   The given module implements functionality for
-  payubiz as `hosted payment`. The code is returned
+  paypal as `hosted payment`. The code is returned
   for the same.
   > See
    `SnitchPayments.PaymentMethodCodes`
@@ -45,28 +49,17 @@ defmodule SnitchPayments.Gateway.PayuBiz do
   """
   @spec parse_response(map) :: HostedPayment.t()
   def parse_response(params) do
-    params = filter_payubiz_params(params)
+    params = filter_stripe_params(params)
     Map.merge(%HostedPayment{}, params)
   end
 
-  @doc """
-  Returns the `test` and `live` `urls` for payubiz
-  hosted payment.
-  """
-  @spec get_url() :: map
-  def get_url do
-    %{
-      test_url: @test_url,
-      live_url: @live_url
-    }
-  end
 
-  defp filter_payubiz_params(params) do
+  defp filter_stripe_params(params) do
     %{
-      transaction_id: params["mihpayid"],
+      transaction_id: params["id"],
       payment_source: params["payment_source"],
       raw_response: params,
-      status: params["status"],
+      status: @success_status,
       order_id: String.to_integer(params["order_id"]),
       payment_id: String.to_integer(params["payment_id"])
     }

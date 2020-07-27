@@ -14,17 +14,27 @@ defmodule SnitchPayments.Provider do
   @spec provider(atom) :: String.t()
   def provider(gateway) do
     case gateway do
-      :payubiz -> "payubiz"
+      :paypal -> "paypal"
       :stripe -> "stripe"
+      :stripev2 -> "stripev2"
+      :sequra -> "sequra"
     end
   end
 
-  def module("payubiz") do
-    Elixir.SnitchPayments.Gateway.PayuBiz
+  def module("paypal") do
+    Elixir.SnitchPayments.Gateway.PayPal
   end
 
   def module("stripe") do
     Elixir.SnitchPayments.Gateway.Stripe
+  end
+
+  def module("stripev2") do
+    Elixir.SnitchPayments.Gateway.Stripev2
+  end
+
+  def module("sequra") do
+    Elixir.SnitchPayments.Gateway.Sequra
   end
 
 end

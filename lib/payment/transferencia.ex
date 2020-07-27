@@ -1,7 +1,7 @@
-defmodule SnitchPayments.Payment.CashOnDelivery do
+defmodule SnitchPayments.Payment.Transferencia do
   @moduledoc """
   Module to expose utilities and functions for the payemnt
-  type `cash on delivery`.
+  type `transferencia`.
   """
   alias SnitchPayments.PaymentMethodCode
 
@@ -22,6 +22,6 @@ defmodule SnitchPayments.Payment.CashOnDelivery do
   """
   @spec payment_code() :: String.t()
   def payment_code do
-    PaymentMethodCode.cash_on_delivery()
+    PaymentMethodCode.transferencia()
   end
 end

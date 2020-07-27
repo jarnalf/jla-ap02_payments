@@ -38,7 +38,7 @@ defmodule SnitchPayments do
 
     key_word =
       Enum.find(key_list, fn key ->
-        key == "Gateway" || key == "CashOnDelivery"
+        key == "Gateway" || key == "CashOnDelivery" || key == "Transferencia"
       end)
 
     length(key_list) >= 3 and key_word != nil
