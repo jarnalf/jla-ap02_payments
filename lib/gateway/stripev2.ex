@@ -56,7 +56,7 @@ defmodule SnitchPayments.Gateway.Stripev2 do
 
   defp filter_stripe_params(params) do
     %{
-      transaction_id: params["session_id"],
+      transaction_id: params["token"],
       payment_source: params["payment_source"],
       raw_response: params,
       status: @success_status,
