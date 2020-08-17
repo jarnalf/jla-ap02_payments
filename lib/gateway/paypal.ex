@@ -8,10 +8,10 @@ defmodule SnitchPayments.Gateway.PayPal do
   alias SnitchPayments.Response.HostedPayment
 
   @behaviour SnitchPayments.Gateway
+  @credentials [:clientId, :secret, :apiUrlSandbox, :apiUrlLive]
 
-  @credentials [:merchant_key, :salt]
-  @test_url "https://test.paypal.in/_payment"
-  @live_url "https://secure.paypal.in/_payment"
+  @failure_status "failure"
+  @success_status "success"
 
   @doc """
   Returns the preferences for the gateway, at present it is mainly the
@@ -49,24 +49,12 @@ defmodule SnitchPayments.Gateway.PayPal do
     Map.merge(%HostedPayment{}, params)
   end
 
-  @doc """
-  Returns the `test` and `live` `urls` for paypal
-  hosted payment.
-  """
-  @spec get_url() :: map
-  def get_url do
-    %{
-      test_url: @test_url,
-      live_url: @live_url
-    }
-  end
-
   defp filter_paypal_params(params) do
     %{
-      transaction_id: params["mihpayid"],
+      transaction_id: params["paypal_order_id"],
       payment_source: params["payment_source"],
       raw_response: params,
-      status: params["status"],
+      status: @success_status,
       order_id: String.to_integer(params["order_id"]),
       payment_id: String.to_integer(params["payment_id"])
     }
